@@ -168,6 +168,46 @@ describe('assertions', function () {
     }).should.throw('expected \'text/html\' to not include \'text/html\'');
   });
 
+  it('#xml', function () {
+    var req = { headers: { 'content-type': [ 'application/xml' ] }};
+    var res = {
+      getHeader: function (key) {
+        return 'application/xml'
+      }
+    };
+
+    req.should.be.xml;
+    res.should.be.xml;
+
+    (function () {
+      req.should.not.be.xml;
+    }).should.throw('expected [ \'application/xml\' ] to not include \'application/xml\'');
+
+    (function () {
+      res.should.not.be.xml;
+    }).should.throw('expected \'application/xml\' to not include \'application/xml\'');
+  });
+
+  it('#javascript', function () {
+    var req = { headers: { 'content-type': [ 'text/javascript' ] }};
+    var res = {
+      getHeader: function (key) {
+        return 'text/javascript'
+      }
+    };
+
+    req.should.be.javascript;
+    res.should.be.javascript;
+
+    (function () {
+      req.should.not.be.javascript;
+    }).should.throw('expected [ \'text/javascript\' ] to not include \'text/javascript\'');
+
+    (function () {
+      res.should.not.be.javascript;
+    }).should.throw('expected \'text/javascript\' to not include \'text/javascript\'');
+  });
+
   it('#redirect', function () {
     var res = { statusCode: 200 };
     res.should.not.redirect;
